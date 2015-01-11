@@ -68,7 +68,11 @@ exec function StopActivate()
 
 //SELECT PROJECTILE
 exec function SelectProjectile(int x){
-	A1Weapon(self.Pawn.Weapon).setMode( x - 1 );
+	if (x !=0 )
+		A1Weapon(self.Pawn.Weapon).setMode( x - 1 );
+	else 
+		A1Weapon(self.Pawn.Weapon).setMode( 0 );
+
 }
 
 // advance to next projectile type, or roll back
