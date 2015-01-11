@@ -68,26 +68,13 @@ exec function StopActivate()
 
 //SELECT PROJECTILE
 exec function SelectProjectile(int x){
-	if(x == 1){
-		A1Weapon(self.Pawn.Weapon).setMode(0);
-	}
-	if(x == 2){
-		A1Weapon(self.Pawn.Weapon).setMode(1);
-	}
-	if(x == 3){
-		A1Weapon(self.Pawn.Weapon).setMode(2);
-	}
-	if(x == 4){
-		A1Weapon(self.Pawn.Weapon).setMode(3);
-	}
+	A1Weapon(self.Pawn.Weapon).setMode( x - 1 );
 }
 
 // advance to next projectile type, or roll back
 exec function nextProj(){
 	local int cType;
 	cType = A1Weapon(self.Pawn.Weapon)._ProjMode;
-
-`Log(cType);
 
 	if (cType >= 0 || cType < 3)
 	{	// go to next
