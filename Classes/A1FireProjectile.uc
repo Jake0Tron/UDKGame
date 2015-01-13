@@ -1,20 +1,12 @@
-class A1FireProjectile extends UTProj_LinkPowerPlasma;
+class A1FireProjectile extends A1Projectile;
 
-var A1Game GameInfo;
 var A1EnemyPawn EnemyPawn;
 var A1Pawn PlayerPawn;
-
-//Description
-var String WeaponEffectName;
-var String WeaponEffectDesc;
-var String WeaponEffectNote;
 
 simulated function PostBeginPlay()
 {
 	super.PostBeginPlay();
-	GameInfo = A1Game(WorldInfo.Game);
 }
-
 
 simulated function Touch(Actor Other, PrimitiveComponent OtherComp, Object.Vector HitLocation, Object.Vector HitNormal)
 {

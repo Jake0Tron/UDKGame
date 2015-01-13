@@ -1,17 +1,8 @@
-class A1Projectile extends UTProj_LinkPowerPlasma;
-// default projectile class
-
-var A1Game GameInfo;
-
-//Description
-var String WeaponEffectName;
-var String WeaponEffectDesc;
-var String WeaponEffectNote;
+class A1DefaultProjectile extends A1Projectile;
 
 simulated function PostBeginPlay()
 {
 	super.PostBeginPlay();
-	GameInfo = A1Game(WorldInfo.Game);
 }
 
 simulated function Touch(Actor Other, PrimitiveComponent OtherComp, Object.Vector HitLocation, Object.Vector HitNormal)
@@ -45,7 +36,7 @@ DefaultProperties
 	MaxSpeed=4000
 	AccelRate=2000.0
 	ColorLevel = (X=5.3,X=0.3,Z=5.3)
-	WeaponEffectName = ""
-	WeaponEffectDesc = ""
+	WeaponEffectName = "Default Projectile"
+	WeaponEffectDesc = "High Damage"
 	WeaponEffectNote = ""
 }

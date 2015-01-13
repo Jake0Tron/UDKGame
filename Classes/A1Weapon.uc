@@ -40,12 +40,10 @@ function setMode(int i){
 	_ProjMode = i;
 }
 
-
-
 DefaultProperties
 {
 	_ProjMode = 0;
-	WeaponProjectiles[0] = class'A1Projectile'
+	WeaponProjectiles[0] = class'A1DefaultProjectile'
 	WeaponProjectiles[1] = class'A1FrostProjectile'
 	WeaponProjectiles[2] = class'A1FireProjectile'
 	WeaponProjectiles[3] = class'A1LightningProjectile'
