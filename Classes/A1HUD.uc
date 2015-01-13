@@ -85,6 +85,8 @@ function DrawHUD(){
 	local float fuelAmount;
 	local float fuelSizeX;
 
+	local A1Projectile LatestProj;
+
 ////////////////////////////////////////////////////////////////////////////////
 
 	// cast to A1Player
@@ -145,6 +147,14 @@ function DrawHUD(){
 		Canvas.DrawTile(class'UTHUD'.default.AltHudTexture, CrosshairSize, CrosshairSize, 666 , 256 , 64 ,64);
 		
 		// PROJECTILE DISPLAY
+		LatestProj = A1Projectile(A1Weapon(weapon).latestProjectile);	
+		if (LatestProj != None){
+			Canvas.DrawText(LatestProj.WeaponEffectName,true);
+			Canvas.DrawText(LatestProj.WeaponEffectNote,true);
+			Canvas.DrawText(LatestProj.WeaponEffectDesc,true);
+		}
+
+	/*
 		if(A1Weapon(weapon)._ProjMode == 0){
 			// default projectiles
 		}
@@ -154,7 +164,7 @@ function DrawHUD(){
 			c.R=0;
 			c.G=128; 
 			c.B=255;
-			Canvas.SetDrawColorStruct(c);		
+			Canvas.SetDrawColorStruct(c);
 			//Canvas.DrawText(weapon.projectile.title);
 			Canvas.DrawText("FREEZE");
 		}
@@ -178,6 +188,8 @@ function DrawHUD(){
 			//Canvas.DrawText(weapon.projectile.title);
 			Canvas.DrawText("SHOCK");
 		}
+
+		*/
 	}// End if weapon != None
 
 	//////////////////////////////////

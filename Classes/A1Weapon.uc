@@ -2,6 +2,7 @@ class A1Weapon extends UTWeap_LinkGun;
 
 var float DamageMultiplier;
 var int _ProjMode;
+var Projectile latestProjectile;
 
 var A1Game GameInfo;
 
@@ -15,9 +16,6 @@ simulated function PostBeginPlay()
 
 simulated function Projectile ProjectileFire()
 {
-	local Projectile latestProjectile;
-	
-
 	latestProjectile = super.ProjectileFire();
 
 	if ( latestProjectile != None)

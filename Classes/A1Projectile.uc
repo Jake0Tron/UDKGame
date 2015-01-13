@@ -16,26 +16,7 @@ simulated function PostBeginPlay()
 
 simulated function Touch(Actor Other, PrimitiveComponent OtherComp, Object.Vector HitLocation, Object.Vector HitNormal)
 {
-	local int ii;
-	local A1EnemyPawn EnemyPawn;
-	local A1Pawn PlayerPawn;
-
-	PlayerPawn = A1Pawn(Instigator);
-	EnemyPawn = A1EnemyPawn(Other);
-
-	if(PlayerPawn != None && EnemyPawn != None){			
-		if(EnemyPawn.IsAliveAndWell()){
-			super.Touch(Other, OtherComp, HitLocation, HitNormal);
-
-			for (ii = 0; ii < GameInfo.OnHitEffects.Length; ii++)
-			{
-				GameInfo.OnHitEffects[ii].OnHit(PlayerPawn, EnemyPawn, self);
-			}
-		}
-		else{
-			self.Destroy();
-		}
-	}
+	
 }
 
 DefaultProperties
