@@ -31,14 +31,14 @@ function StartActivate()
 			break;
 		}
 	}
+	
+		rocket = Spawn(class'UTProj_Rocket', player.Pawn,,player.pawn.Location, player.Rotation);
+		rocket.Init(vector(player.Rotation));
 
-	rocket = Spawn(class'UTProj_Rocket', player.Pawn,,player.pawn.Location, player.Rotation);
-	rocket.Init(vector(player.Rotation));
+		PlaySound(LaunchSound,,,,player.Pawn.Location);
 
-	PlaySound(LaunchSound,,,,player.Pawn.Location);
-
-	OnCoolDown = true;
-	SetTimer(CoolDown);
+		OnCoolDown = true;
+		SetTimer(CoolDown);
 }
 
 function Timer()

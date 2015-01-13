@@ -151,15 +151,25 @@ function DrawHUD(){
 		// set location (3 lines)
 
 
-		projIndex = A1Weapon(weapon)._ProjMode;
 		
 		LatestProj =  A1Weapon(weapon).latestProjectile ;	
+		projIndex = LatestProj.index;
 				
 		if (LatestProj != None){
 		
 			Canvas.SetPos(Canvas.SizeX * 0.9f, Canvas.SizeY * 0.85f);
-
-			if(projIndex == 0 ){
+			c.A=255;
+			c.R=255;
+			c.G=255; 
+			c.B=255;
+			Canvas.SetDrawColorStruct(c);	
+			Canvas.DrawText(LatestProj.WeaponEffectName,true);
+			Canvas.DrawText(LatestProj.WeaponEffectNote,true);
+			Canvas.DrawText(LatestProj.WeaponEffectDesc,true);
+			
+				/*
+			// setting color for each font
+				if(projIndex == 0 ){
 				// default projectiles
 				c.A=255;
 				c.R=255;
@@ -211,6 +221,7 @@ function DrawHUD(){
 				Canvas.DrawText(LatestProj.WeaponEffectNote,true);
 				Canvas.DrawText(LatestProj.WeaponEffectDesc,true);
 			}
+			*/
 		}
 
 	}// End if weapon != None
