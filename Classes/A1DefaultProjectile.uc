@@ -31,6 +31,7 @@ simulated function Touch(Actor Other, PrimitiveComponent OtherComp, Object.Vecto
 
 DefaultProperties
 {
+	index = 0
 	Damage = 39
 	Speed=1400
 	MaxSpeed=4000

@@ -85,7 +85,6 @@ exec function nextProj(){
 		}else{
 			cType++;
 		}
-	`log(cType);
 		A1Weapon(self.Pawn.Weapon).setMode(cType);
 	}
 	else return;
@@ -103,7 +102,6 @@ exec function prevProj(){
 		}else{
 			cType--;
 		}
-	`log(cType);
 		A1Weapon(self.Pawn.Weapon).setMode(cType);
 	}
 		else return;

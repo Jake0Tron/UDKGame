@@ -86,6 +86,7 @@ function DrawHUD(){
 	local float fuelSizeX;
 
 	local A1Projectile LatestProj;
+	local int projIndex;
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -147,49 +148,71 @@ function DrawHUD(){
 		Canvas.DrawTile(class'UTHUD'.default.AltHudTexture, CrosshairSize, CrosshairSize, 666 , 256 , 64 ,64);
 		
 		// PROJECTILE DISPLAY
-		LatestProj = A1Projectile(A1Weapon(weapon).latestProjectile);	
+		// set location (3 lines)
+
+
+		projIndex = A1Weapon(weapon)._ProjMode;
+		
+		LatestProj =  A1Weapon(weapon).latestProjectile ;	
+				
 		if (LatestProj != None){
-			Canvas.DrawText(LatestProj.WeaponEffectName,true);
-			Canvas.DrawText(LatestProj.WeaponEffectNote,true);
-			Canvas.DrawText(LatestProj.WeaponEffectDesc,true);
+		
+			Canvas.SetPos(Canvas.SizeX * 0.9f, Canvas.SizeY * 0.85f);
+
+			if(projIndex == 0 ){
+				// default projectiles
+				c.A=255;
+				c.R=255;
+				c.G=255; 
+				c.B=255;
+				Canvas.SetDrawColorStruct(c);
+
+				Canvas.DrawText(LatestProj.WeaponEffectName,true);
+				Canvas.DrawText(LatestProj.WeaponEffectNote,true);
+				Canvas.DrawText(LatestProj.WeaponEffectDesc,true);
+			}
+			if(projIndex == 1){
+				// Frost Projectiles
+				c.A=255;
+				c.R=0;
+				c.G=128; 
+				c.B=255;
+				Canvas.SetDrawColorStruct(c);
+				//Canvas.DrawText(weapon.projectile.title);
+				//Canvas.DrawText("FREEZE");
+				Canvas.DrawText(LatestProj.WeaponEffectName,true);
+				Canvas.DrawText(LatestProj.WeaponEffectNote,true);
+				Canvas.DrawText(LatestProj.WeaponEffectDesc,true);
+
+			}
+			if(projIndex == 2){
+				// Fire Projectiles
+				c.A=255;
+				c.R=255;
+				c.G=128; 
+				c.B=0;
+				Canvas.SetDrawColorStruct(c);
+				//Canvas.DrawText(weapon.projectile.title);
+				//Canvas.DrawText("BURN");
+				Canvas.DrawText(LatestProj.WeaponEffectName,true);
+				Canvas.DrawText(LatestProj.WeaponEffectNote,true);
+				Canvas.DrawText(LatestProj.WeaponEffectDesc,true);
+			}
+			if(projIndex == 3){
+				// Lightning Projectiles
+				c.A=255;
+				c.R=255;
+				c.G=200; 
+				c.B=0;
+				Canvas.SetDrawColorStruct(c);
+				//Canvas.DrawText(weapon.projectile.title);
+				//Canvas.DrawText("SHOCK");
+				Canvas.DrawText(LatestProj.WeaponEffectName,true);
+				Canvas.DrawText(LatestProj.WeaponEffectNote,true);
+				Canvas.DrawText(LatestProj.WeaponEffectDesc,true);
+			}
 		}
 
-	/*
-		if(A1Weapon(weapon)._ProjMode == 0){
-			// default projectiles
-		}
-		if(A1Weapon(weapon)._ProjMode == 1){
-			// Frost Projectiles
-			c.A=255;
-			c.R=0;
-			c.G=128; 
-			c.B=255;
-			Canvas.SetDrawColorStruct(c);
-			//Canvas.DrawText(weapon.projectile.title);
-			Canvas.DrawText("FREEZE");
-		}
-		if(A1Weapon(weapon)._ProjMode == 2){
-			// Fire Projectiles
-			c.A=255;
-			c.R=255;
-			c.G=128; 
-			c.B=0;
-			Canvas.SetDrawColorStruct(c);
-			//Canvas.DrawText(weapon.projectile.title);
-			Canvas.DrawText("BURN");
-		}
-		if(A1Weapon(weapon)._ProjMode == 3){
-			// Lightning Projectiles
-			c.A=255;
-			c.R=255;
-			c.G=200; 
-			c.B=0;
-			Canvas.SetDrawColorStruct(c);
-			//Canvas.DrawText(weapon.projectile.title);
-			Canvas.DrawText("SHOCK");
-		}
-
-		*/
 	}// End if weapon != None
 
 	//////////////////////////////////

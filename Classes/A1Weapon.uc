@@ -2,7 +2,7 @@ class A1Weapon extends UTWeap_LinkGun;
 
 var float DamageMultiplier;
 var int _ProjMode;
-var Projectile latestProjectile;
+var A1Projectile latestProjectile;
 
 var A1Game GameInfo;
 
@@ -12,11 +12,12 @@ simulated function PostBeginPlay()
 	GameInfo = A1Game(WorldInfo.Game);
 	FireInterval[0] = GameInfo.FireInterval;
 	DamageMultiplier = GameInfo.DamageMultiplier;
+
 }
 
 simulated function Projectile ProjectileFire()
 {
-	latestProjectile = super.ProjectileFire();
+	latestProjectile = A1Projectile(super.ProjectileFire());
 
 	if ( latestProjectile != None)
 	{
@@ -40,7 +41,7 @@ function setMode(int i){
 
 DefaultProperties
 {
-	_ProjMode = 0;
+	_ProjMode = 0
 	WeaponProjectiles[0] = class'A1DefaultProjectile'
 	WeaponProjectiles[1] = class'A1FrostProjectile'
 	WeaponProjectiles[2] = class'A1FireProjectile'

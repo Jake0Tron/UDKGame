@@ -38,6 +38,7 @@ simulated function Touch(Actor Other, PrimitiveComponent OtherComp, Object.Vecto
 
 DefaultProperties
 {
+	index = 1
 	Damage = 20
 	ColorLevel = (X=0.3,Y=0.3,Z=5)
 	WeaponEffectName = "Frost Effect"
