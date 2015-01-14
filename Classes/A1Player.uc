@@ -85,7 +85,7 @@ exec function nextProj(){
 		}else{
 			cType++;
 		}
-		A1Weapon(self.Pawn.Weapon).setMode(cType);
+		SelectProjectile(cType);
 	}
 	else return;
 }
@@ -102,7 +102,7 @@ exec function prevProj(){
 		}else{
 			cType--;
 		}
-		A1Weapon(self.Pawn.Weapon).setMode(cType);
+		SelectProjectile(cType);
 	}
 		else return;
 }

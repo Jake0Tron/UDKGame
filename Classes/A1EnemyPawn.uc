@@ -271,7 +271,7 @@ event Tick( float DeltaTime ){
 					this.FireDamage = ((this.FireProjectileDmg + this.FireStacks) * this.FireDmgMulti)/FireDuration;
 				}
 				else{
-					`log(this.FireDmgMulti);
+					//`log(this.FireDmgMulti);
 					this.FireDamage = (this.FireProjectileDmg + this.FireStacks) /FireDuration;//fix scaling
 				}
 

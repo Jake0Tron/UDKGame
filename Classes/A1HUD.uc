@@ -86,7 +86,6 @@ function DrawHUD(){
 	local float fuelSizeX;
 
 	local A1Projectile LatestProj;
-	local int projIndex;
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -113,7 +112,7 @@ function DrawHUD(){
 	
 	// cast 
 	if (A1Weapon(weapon) != None){	
-
+	
 		/** set player Damage */
 		PlayerDamage = A1Weapon(weapon).DamageMultiplier;
 		
@@ -152,9 +151,7 @@ function DrawHUD(){
 
 
 		
-		LatestProj =  A1Weapon(weapon).latestProjectile ;	
-		projIndex = LatestProj.index;
-				
+		LatestProj =  A1Weapon(weapon).latestProjectile;	
 		if (LatestProj != None){
 		
 			Canvas.SetPos(Canvas.SizeX * 0.9f, Canvas.SizeY * 0.85f);

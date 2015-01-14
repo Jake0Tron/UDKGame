@@ -62,12 +62,14 @@ simulated function Tick(float deltaTime)
 function StartActivate()
 {	
 	JetPackOn = true;
+	if (foobar != None)
 	foobar.ActivateSystem();
 }
 
 function StopActivate()
 {
 	JetPackOn = false;
+	if (foobar != None)
 	foobar.DeactivateSystem();
 }
 

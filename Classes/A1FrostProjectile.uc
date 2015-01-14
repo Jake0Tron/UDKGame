@@ -26,6 +26,8 @@ simulated function Touch(Actor Other, PrimitiveComponent OtherComp, Object.Vecto
 					GameInfo.OnHitEffects[ii].OnHit(PlayerPawn, EnemyPawn, self);
 				}
 			}
+			
+			if (EnemyPawn != None)
 
 			//Apply Effect
 			EnemyPawn._FrostDebuff(true,EnemyPawn);

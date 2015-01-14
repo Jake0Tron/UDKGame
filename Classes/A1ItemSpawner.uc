@@ -58,7 +58,7 @@ function bool SpawnSpecificItem(int itemIndex)
 	}
 
 	CurrentPowerUp = nextItem;
-	`Log("Spawned " $ CurrentPowerUp.PowerUpName);
+	//`Log("Spawned " $ CurrentPowerUp.PowerUpName);
 
 	// move the actor so we can see the mesh
 	CurrentPowerUp.SetLocation(location);
@@ -90,7 +90,7 @@ function Touch(Actor Other, PrimitiveComponent OtherComp, Object.Vector HitLocat
 
 	player = A1Player(playerPawn.Owner);
 	CurrentPowerUp.Apply(playerPawn);
-	`Log("Powered up: " $ CurrentPowerUp.PowerUpName);
+	//`Log("Powered up: " $ CurrentPowerUp.PowerUpName);
 
 	A1HUD(player.myHUD).SetDisplayTextForSeconds( CurrentPowerUp.PowerUpName$"\n"$CurrentPowerUp.PowerDescription , 5 ) ;
 	A1HUD(player.myHUD).DisplayTextForSeconds();

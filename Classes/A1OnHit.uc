@@ -6,7 +6,7 @@ function Apply(A1Pawn P)
 {
 	super.Apply(P);
 
-	`log("inserting: " $ PowerUpName);
+	//`log("inserting: " $ PowerUpName);
 	GameInfo.OnHitEffects.AddItem(self);
 }
 

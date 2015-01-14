@@ -17,7 +17,7 @@ function OnHit(A1Pawn PlayerPawn, A1EnemyPawn EnemyPawn, UTProj_LinkPowerPlasma 
 		return;
 	}
 
-	`log("knocking back " $ EnemyPawn.GetHumanReadableName());
+	//`log("knocking back " $ EnemyPawn.GetHumanReadableName());
 	
 	GetAxes(Projectile.Rotation, X, Y, Z);
 	EnemyPawn.AddVelocity((Z * (KnockbackForce / 2)) + (X * KnockbackForce), Projectile.Location, class'DamageType');

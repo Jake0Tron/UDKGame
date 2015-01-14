@@ -9,7 +9,7 @@ function OnHit(A1Pawn PlayerPawn, A1EnemyPawn EnemyPawn, UTProj_LinkPowerPlasma 
 		return;
 	}
 
-	`log("healing " $ PlayerPawn.GetHumanReadableName() $ " for " $ Projectile.Damage * LifestealMultiplier);
+	//`log("healing " $ PlayerPawn.GetHumanReadableName() $ " for " $ Projectile.Damage * LifestealMultiplier);
 	PlayerPawn.GiveHealth(Projectile.Damage * LifestealMultiplier, PlayerPawn.HealthMax);
 }
 

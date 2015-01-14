@@ -23,7 +23,7 @@ simulated function Touch(Actor Other, PrimitiveComponent OtherComp, Object.Vecto
 			{
 				GameInfo.OnHitEffects[ii].OnHit(PlayerPawn, EnemyPawn, self);
 			}
-		
+			if (EnemyPawn != None)
 			//Apply Effect
 			EnemyPawn._FireDebuff(true,EnemyPawn,A1Weapon(PlayerPawn.Weapon).DamageMultiplier,Damage);
 		}
