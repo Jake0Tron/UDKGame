@@ -6,6 +6,7 @@ var int CamX;
 var int CamY;
 var int CamZ;
 var bool bStandardCam;
+var bool bSniperCam;
 
 simulated function PostBeginPlay()
 {
@@ -107,17 +108,33 @@ simulated function bool CalcCamera( float fDeltaTime, out vector out_CamLoc, out
 	return true;
 }   
 
+
+exec function SniperCam(){
+	bSniperCam=true;	
+	CamX=64;
+	CamY=0;
+	CamZ=-4;
+}
+
+exec function StandardCam(){
+	bStandardCam = true;
+	bSniperCam=false;
+	CamX=128;
+	CamY=0;
+	CamZ=0;
+}
+
 exec function toggleLeftShoulderCam(){
 	if (bStandardCam)
 	{
 		CamX=128;
 		CamY=32;
-		CamZ=16;
+		CamZ=0;
 		bStandardCam=false;
 	}else{
 		CamX=128;
 		CamY=0;
-		CamZ=16;
+		CamZ=0;
 		bStandardCam=true;
 	}
 
@@ -129,15 +146,16 @@ exec function toggleRightShoulderCam(){
 	{
 		CamX=128;
 		CamY=-32;
-		CamZ=16;
+		CamZ=0;
 		bStandardCam=false;
 	}else{
 		CamX=128;
 		CamY=0;
-		CamZ=16;
+		CamZ=0;
 		bStandardCam=true;
 	}
 }
+
 
 
 function toggleClearChamber(bool in){
@@ -149,6 +167,6 @@ defaultproperties
 	bStandardCam=true
 	CamX=128
 	CamY=0
-	CamZ=16
+	CamZ=0
 	ClearedChamber = false
 }

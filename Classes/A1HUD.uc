@@ -119,7 +119,6 @@ function DrawHUD(){
 		if(Pawn(HitActor) == None)
 		{
 			AimingAt = TraceEnd;
-			
 			// FOR LASER
 			// Green, not hitting anyone
 			c.A=255;
@@ -137,7 +136,6 @@ function DrawHUD(){
 			c.R=255;
 			c.G=0; 
 			c.B=0;
-
 			Draw3DLine(TraceStart, TraceEnd, c);
 			// reticle color
 			Canvas.SetDrawColor(255,0,0,255);
@@ -446,6 +444,8 @@ function DrawHUD(){
 		}
 	}
 	
+	Canvas.Draw2DLine(Canvas.SizeX/2, 0 , canvas.SizeX/2, Canvas.SizeY,tc);
+
 	DisplayClock();
 	DisplayTextForSeconds();
 }
