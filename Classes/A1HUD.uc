@@ -147,13 +147,10 @@ function DrawHUD(){
 		Canvas.DrawTile(class'UTHUD'.default.AltHudTexture, CrosshairSize, CrosshairSize, 666 , 256 , 64 ,64);
 		
 		// PROJECTILE DISPLAY
-		// set location (3 lines)
-
-
-		
 		LatestProj =  A1Weapon(weapon).latestProjectile;	
 		if (LatestProj != None){
 		
+			// set location (3 lines)
 			Canvas.SetPos(Canvas.SizeX * 0.9f, Canvas.SizeY * 0.85f);
 			c.A=255;
 			c.R=255;
@@ -164,7 +161,7 @@ function DrawHUD(){
 			Canvas.DrawText(LatestProj.WeaponEffectNote,true);
 			Canvas.DrawText(LatestProj.WeaponEffectDesc,true);
 			
-				/*
+/*
 			// setting color for each font
 				if(projIndex == 0 ){
 				// default projectiles
@@ -218,7 +215,7 @@ function DrawHUD(){
 				Canvas.DrawText(LatestProj.WeaponEffectNote,true);
 				Canvas.DrawText(LatestProj.WeaponEffectDesc,true);
 			}
-			*/
+*/
 		}
 
 	}// End if weapon != None
@@ -392,7 +389,7 @@ function DrawHUD(){
 		Canvas.DrawText(GameInfo.CurrentItem.PowerUpName, true);
 		//description display
 		Canvas.Font = class'Engine'.static.GetMediumFont();
-		Canvas.DrawText("LShift to activate", true);
+		Canvas.DrawText("LAlt to activate", true);
 		
 		// jetpack Fuel Display
 		if (GameInfo.CurrentItem.PowerUpName == "Jet Pack"){

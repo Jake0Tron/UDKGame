@@ -2,6 +2,10 @@ class A1Pawn extends A1EnemyPawn;
 // NOTE: PLAYER STARTING HEALTH IS SET IN DEFAULTPROPERTIES
 
 var bool ClearedChamber;
+var int CamX;
+var int CamY;
+var int CamZ;
+var bool bStandardCam;
 
 simulated function PostBeginPlay()
 {
@@ -91,8 +95,9 @@ simulated function bool CalcCamera( float fDeltaTime, out vector out_CamLoc, out
 		CamDirX *= square(cos(out_CamRot.Pitch * 0.0000958738)); // 0.0000958738 = 2*PI/65536
 	}
 
-	// set the camera location appropriate to the x,y,z                               
-	out_CamLoc = CamStart - (CurrentCamOffset.X + 128 ) * CamDirX - (CurrentCamOffset.Y) * CamDirY + (CurrentCamOffset.Z + 16) * CamDirZ;
+	// set the camera location appropriate to the x,y,z using CamX, CamY, and CamZ to offset it.
+
+	out_CamLoc = CamStart - (CurrentCamOffset.X + CamX ) * CamDirX - (CurrentCamOffset.Y + CamY) * CamDirY + (CurrentCamOffset.Z + CamZ) * CamDirZ;
 	
 	if (Trace(HitLocation, HitNormal, out_CamLoc, CamStart, false, vect(12,12,12)) != None)
 	{
@@ -102,13 +107,48 @@ simulated function bool CalcCamera( float fDeltaTime, out vector out_CamLoc, out
 	return true;
 }   
 
+exec function toggleLeftShoulderCam(){
+	if (bStandardCam)
+	{
+		CamX=128;
+		CamY=32;
+		CamZ=16;
+		bStandardCam=false;
+	}else{
+		CamX=128;
+		CamY=0;
+		CamZ=16;
+		bStandardCam=true;
+	}
+
+}
+
+exec function toggleRightShoulderCam(){
+	
+	if (bStandardCam)
+	{
+		CamX=128;
+		CamY=-32;
+		CamZ=16;
+		bStandardCam=false;
+	}else{
+		CamX=128;
+		CamY=0;
+		CamZ=16;
+		bStandardCam=true;
+	}
+}
+
+
 function toggleClearChamber(bool in){
 	ClearedChamber = in;
-	if (ClearedChamber)
-	`Log("PLAYER Clear Status: "$ClearedChamber);
 }
 
 defaultproperties
 {
+	bStandardCam=true
+	CamX=128
+	CamY=0
+	CamZ=16
 	ClearedChamber = false
 }
