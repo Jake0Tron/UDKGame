@@ -53,12 +53,12 @@ simulated event PostBeginPlay(){
 function decideUpgrade(){
 	if(A1Weapon(self.Weapon) != None){
 		A1Weapon(self.Weapon).FireInterval[0] = 0.25;
-		//rateUpgrade(A1Game(WorldInfo.Game).activeChamberIndex);
-		//dmgUpgrade(A1Game(WorldInfo.Game).activeChamberIndex);
+		rateUpgrade(A1Game(WorldInfo.Game).activeChamberIndex);
+		dmgUpgrade(A1Game(WorldInfo.Game).activeChamberIndex);
 		RWE(4);
 	}
-	//hltUpgrade(A1Game(WorldInfo.Game).activeChamberIndex);
-	//moveUpgrade(A1Game(WorldInfo.Game).activeChamberIndex);
+	hltUpgrade(A1Game(WorldInfo.Game).activeChamberIndex);
+	moveUpgrade(A1Game(WorldInfo.Game).activeChamberIndex);
 }
 
 /** Upgrade Functions **/

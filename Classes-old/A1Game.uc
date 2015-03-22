@@ -87,8 +87,53 @@ function Tick ( float pDeltaTime )
 {
   super.Tick( pDeltaTime ) ;
   self.InitializeChambers() ;
- if (!ThereIsHuman())
-	return;
+	// make sure there's a player
+  if ( ! self.ThereIsHuman())
+  {
+    return ;
+  }
+	
+  if ( self.Chambers.Length > 0 )
+  {
+    //Select a random chamber if none has been selected
+    if ( self.activeChamberIndex < 0 )
+    {
+      self.activeChamberIndex = self.SelectRandomChamber() ;
+    }
+
+    //Activate the selected random chamber, if it has not been activated.
+    if ( ! self.Chambers[ self.activeChamberIndex ].wasActivated )
+    {
+      self.ActivateChamber( self.Chambers[ self.activeChamberIndex ]) ;
+	 
+      return ;
+    }
+  }
+	
+  //If the selected chamber has been beat, display the teleporter, pick a random chamber and
+  //activate it
+  //keep the teleporter hidden otherwise
+  if ( self.activeChamberIndex > -1 && self.Chambers[ self.activeChamberIndex ].hasBeenBeat())
+  {	
+    A1HUD(self.player.myHUD).SetDisplayTextForSeconds( "Chamber Clear" , 5 ) ;
+    self.restoreHealth = true ;
+
+    // if no item yet
+    if (!Chambers[ self.activeChamberIndex ].ItemSpawner.ItemSpawned)
+    {
+      Chambers[ self.activeChamberIndex ].ItemSpawner.SpawnItem();
+    }
+
+	  // makes the game unlimited
+    self.resetChambers() ;
+    self.Chambers[ self.activeChamberIndex ].ShowTeleporter() ; 
+	self.activeChamberIndex = self.SelectRandomChamber( self.activeChamberIndex ) ;	
+    self.ActivateChamber( self.Chambers[ self.activeChamberIndex ]) ;
+  }
+  else
+  {
+    self.Chambers[ self.activeChamberIndex ].HideTeleporter() ;
+  }
   self.healthRestore() ;
 }
 
@@ -214,7 +259,7 @@ DefaultProperties
 	 bPlayersVsBots=true
 
 	// powerups
-	MaxHealth = 150
+	MaxHealth = 123
 	FireInterval = 0.25
 	DamageMultiplier = 1
 }

@@ -67,19 +67,44 @@ exec function StopActivate()
 }
 
 //SELECT PROJECTILE
-exec function SelectProjectile(int x){
-	if(x == 1){
-		A1Weapon(self.Pawn.Weapon).setMode(0);
+exec function SelectProjectile(int x)
+{
+		A1Weapon(self.Pawn.Weapon).setMode( x );
+}
+
+// advance to next projectile type, or roll back
+exec function nextProj(){
+	local int cType;
+	cType = A1Weapon(self.Pawn.Weapon)._ProjMode;
+	
+	if (cType >= 0 && cType <=3)
+	{	// go to next
+		if (cType >= 3 || cType < 0)
+		{
+			cType=0;
+		}else{
+			cType++;
+		}
+		SelectProjectile(cType);
 	}
-	if(x == 2){
-		A1Weapon(self.Pawn.Weapon).setMode(1);
+	else return;
+}
+// advance to prev projectile type, or roll back
+exec function prevProj(){
+	local int cType;
+	cType = A1Weapon(self.Pawn.Weapon)._ProjMode;
+
+	if (cType >= 0 && cType <= 3)
+	{	// go to next
+		if (cType <= 0 || cType > 3)
+		{
+			cType=3;
+		}else{
+			cType--;
+		}
+		SelectProjectile(cType);
 	}
-	if(x == 3){
-		A1Weapon(self.Pawn.Weapon).setMode(2);
-	}
-	if(x == 4){
-		A1Weapon(self.Pawn.Weapon).setMode(3);
-	}
+		else return;
 }
 
 DefaultProperties

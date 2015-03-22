@@ -19,7 +19,6 @@ var pawn PlayerPawn;
 simulated function PostBeginPlay()
 {	
 	super.PostBeginPlay();
-	Apply(A1Pawn(PlayerPawn));
 }
 
 simulated function Tick(float deltaTime)
@@ -76,13 +75,13 @@ function StopActivate()
 
 DefaultProperties
 {
-	Thrust = 1400
+	Thrust = 1500
 	JetPackOn = false
 
 	MaxFuel = 100
 	Fuel = 0
-	FuelConsumptionRate = 30
-	FuelRegenRate = 45
+	FuelConsumptionRate = 50
+	FuelRegenRate = 30
 
 	Trail = ParticleSystem'Castle_Assets.FX.P_FX_Fire_SubUV_01'
 

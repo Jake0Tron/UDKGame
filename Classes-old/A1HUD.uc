@@ -387,7 +387,7 @@ function DrawHUD(){
 		Canvas.DrawText(GameInfo.CurrentItem.PowerUpName, true);
 		//description display
 		Canvas.Font = class'Engine'.static.GetMediumFont();
-		Canvas.DrawText(GameInfo.CurrentItem.PowerDescription, true);
+		Canvas.DrawText("LAlt to activate", true);
 		
 		// jetpack Fuel Display
 		if (GameInfo.CurrentItem.PowerUpName == "Jet Pack"){
@@ -400,7 +400,7 @@ function DrawHUD(){
 
 			Canvas.SetPos(
 			(HudSizeX + TLHudSizeX + (textSizeX * 0.25f)),
-			((textSizeY * 4.0f)) 
+			((textSizeY * 3.0f)) 
 			);
 			tc.A=255;
 			tc.R=128;
@@ -411,7 +411,7 @@ function DrawHUD(){
 			
 			Canvas.SetPos(
 			(HudSizeX + TLHudSizeX + (textSizeX * 0.25f)),
-			((textSizeY * 4.0f)) 
+			((textSizeY * 3.0f)) 
 			);
 
 			tc.A=255;
@@ -444,6 +444,9 @@ function DrawHUD(){
 		}
 	}
 	
+	Canvas.Draw2DLine(Canvas.SizeX/2, 0 , canvas.SizeX/2, Canvas.SizeY,tc);
+
+	DisplayClock();
 	DisplayTextForSeconds();
 }
 
@@ -477,6 +480,22 @@ function DisplayTextForSeconds ( )
 	}
 }
 
+function DisplayClock(){
+	local string Time;
+	local vector2D POS;
+
+	if (UTGRI != None)
+	{
+		POS = ResolveHudPosition(ClockPosition,183,44);
+		Time = FormatTime(UTGRI.TimeLimit != 0 ? UTGRI.RemainingTime : UTGRI.ElapsedTime);
+
+		POS.X = 0;
+		POS.Y = Canvas.SizeY * 0.90f;
+		
+		Canvas.DrawColor = WhiteColor;
+		DrawGlowText(Time, POS.X + (28 * ResolutionScale), POS.Y, 39 * ResolutionScale);
+	}
+}
 
 exec function ShowStatsOn(){
 	bShowingStats = true;

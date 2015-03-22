@@ -111,7 +111,6 @@ simulated function bool CalcCamera( float fDeltaTime, out vector out_CamLoc, out
 
 exec function SniperCam(){
 	bSniperCam=true;	
-	bStandardCam=false;
 	CamX=64;
 	CamY=0;
 	CamZ=-4;

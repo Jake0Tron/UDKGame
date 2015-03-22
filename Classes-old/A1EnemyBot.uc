@@ -64,7 +64,7 @@ function cbtIncrease(float times){
 
 //Get Skill
 function getSkill(){
-//	Skill = WorldInfo.Game.GameDifficulty+A1Game(WorldInfo.Game).activeChamberIndex;
+	Skill = WorldInfo.Game.GameDifficulty+A1Game(WorldInfo.Game).activeChamberIndex;
 }
 
 //Increase Jump
@@ -90,10 +90,10 @@ Begin:
 }
 
 DefaultProperties{
-	Accuracy = 0;			// -1 to 1 (0 is default, higher is more accurate)
+	Accuracy = -1;			// -1 to 1 (0 is default, higher is more accurate)
 	BaseAggressiveness = 0; // 0 to 1 (0.3 default, higher is more aggressive)
-	StrafingAbility = 0;	// -1 to 1 (higher uses strafing more)
-	CombatStyle = 0;		// -1 to 1 = low means tends to stay off and snipe, high means tends to charge and melee
+	StrafingAbility = -1;	// -1 to 1 (higher uses strafing more)
+	CombatStyle = -1;		// -1 to 1 = low means tends to stay off and snipe, high means tends to charge and melee
 	Jumpiness = 0;			// 0 to 1
 }
 
