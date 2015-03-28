@@ -27,13 +27,21 @@ simulated function Projectile ProjectileFire()
 	return LatestProjectile;
 }
 
-//OVERRIDE
+//OVERRIDE weapon drop
 function DropFrom(vector StartLocation, vector StartVelocity);
 
 //OVERRIDE
 function class<Projectile> GetProjectileClass(){
 	return WeaponProjectiles[_ProjMode]; 
 }
+
+function float getDamage(){
+	if (latestProjectile != None)
+		return LatestProjectile.Damage *= DamageMultiplier;
+	else 
+		return GameInfo.defaultDamage;
+}
+
 
 function setMode(int i){
 	_ProjMode = i;

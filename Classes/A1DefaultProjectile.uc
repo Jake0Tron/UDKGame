@@ -3,6 +3,7 @@ class A1DefaultProjectile extends A1Projectile;
 simulated function PostBeginPlay()
 {
 	super.PostBeginPlay();
+	Damage = GameInfo.defaultDamage;
 }
 
 simulated function Touch(Actor Other, PrimitiveComponent OtherComp, Object.Vector HitLocation, Object.Vector HitNormal)
@@ -32,12 +33,11 @@ simulated function Touch(Actor Other, PrimitiveComponent OtherComp, Object.Vecto
 DefaultProperties
 {
 	index = 0
-	Damage = 39
 	Speed=1400
 	MaxSpeed=4000
 	AccelRate=2000.0
-	ColorLevel = (X=5.3,X=0.3,Z=5.3)
-	WeaponEffectName = "Default Projectile"
+	
+	WeaponEffectName = "Standard Bullets"
 	WeaponEffectDesc = "High Damage"
 	WeaponEffectNote = ""
 }

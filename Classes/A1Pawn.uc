@@ -7,6 +7,8 @@ var int CamY;
 var int CamZ;
 var bool bStandardCam;
 var bool bSniperCam;
+var int ShoulderOffset;
+var int CameraDistance;
 
 simulated function PostBeginPlay()
 {
@@ -61,7 +63,7 @@ simulated function bool CalcCamera( float fDeltaTime, out vector out_CamLoc, out
 	// player dead viewpoint
 	if ( Health <= 0 )
 	{
-		CurrentCamOffset = vect(0,0,0);
+		CurrentCamOffset = vect(256,512,0);
 		CurrentCamOffset.X = GetCollisionRadius();
 	}
 
@@ -112,9 +114,9 @@ simulated function bool CalcCamera( float fDeltaTime, out vector out_CamLoc, out
 exec function SniperCam(){
 	bSniperCam=true;	
 	bStandardCam=false;
-	CamX=64;
+	CamX=32;
 	CamY=0;
-	CamZ=-4;
+	CamZ=-8;
 }
 
 exec function StandardCam(){
@@ -129,7 +131,7 @@ exec function toggleLeftShoulderCam(){
 	if (bStandardCam)
 	{
 		CamX=128;
-		CamY=32;
+		CamY=ShoulderOffset;
 		CamZ=0;
 		bStandardCam=false;
 	}else{
@@ -146,7 +148,7 @@ exec function toggleRightShoulderCam(){
 	if (bStandardCam)
 	{
 		CamX=128;
-		CamY=-32;
+		CamY=-ShoulderOffset;
 		CamZ=0;
 		bStandardCam=false;
 	}else{
@@ -157,14 +159,10 @@ exec function toggleRightShoulderCam(){
 	}
 }
 
-
-
-function toggleClearChamber(bool in){
-	ClearedChamber = in;
-}
-
 defaultproperties
 {
+	ShoulderOffset=48
+	CameraDistance = 256
 	bStandardCam=true
 	CamX=128
 	CamY=0

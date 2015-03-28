@@ -9,6 +9,7 @@ var A1Chamber chamber;
 // local player 
 var A1Player player;
 
+
 var int secondsFrameCounter ;
 var string textToDisplay ;
 
@@ -18,6 +19,7 @@ var bool bShowingStats;
 var float PlayerSpeed;
 var float PlayerDamage;
 var float FireSpeed;
+var bool bLaser;
 
 simulated function PostBeginPlay()
 {
@@ -29,15 +31,6 @@ function DrawHUD(){
 
 	//local A1Pawn pawn;
 	local UTWeapon weapon;
-
-	/** Whatever the player is aiming at currently*/
-	local Actor HitActor;
-
-	local Vector AimingAt;  // represents direction player is facing
-	local Vector AimNormal; // normal of their aim trace
-	local Vector TraceStart;// start trace point (taken from instantFireStartTrace()
-	local Vector TraceEnd;  // end trace point ( startPoint + weapon'sMaxRange*player's rotation)
-	local Vector ScreenPos; // where on the screen to draw the reticle
 
 	/** Color to use when Drawing on Canvas*/
 	local Color c;
@@ -67,155 +60,55 @@ function DrawHUD(){
 	local float HudPosY;
 	local float HealthHUDSize;
 
-	// CrossHair Size on screen
-	local float CrosshairSize;
-
 	// Stat HUD Position will be top left (0,0), no variable needed; 
 	// Stat HUD size; uses BarSizeY to match health bar size)
 	local float TLHudSizeX; 
 
 	/** Onscreen Player Stats */
-
 	local int textSizeX, textSizeY;
 
 	/** Local Powerups*/
 	local A1Bazooka bazooka;
 	local A1JetPack jetpack;
+	/* powerup variables */
 	local float fuelMax;
 	local float fuelAmount;
 	local float fuelSizeX;
 
 	local A1Projectile LatestProj;
 
-////////////////////////////////////////////////////////////////////////////////
-
 	// cast to A1Player
 	player = A1Player(PlayerOwner);
 
-	// ensure we're controlling 
+	// ensure we're controlling the player
 	if (player.Pawn == None ) return;
-		
-	/** DRAW RETICLE/LASER TRACE */
-	/* Logic : 
-	 * http://gamedev.stackexchange.com/questions/45098/drawing-a-texture-at-the-end-of-a-trace-crosshair-udk
-	 */
+
 	weapon = UTWeapon(player.Pawn.Weapon);
 	weapon = A1Weapon(weapon);
-	/** draw laser/reticle*/
-	TraceStart = weapon.InstantFireStartTrace();
-	TraceEnd = TraceStart + (player.Pawn.Weapon.MaxRange()) * vector(PlayerOwner.Rotation);
-	HitActor = player.Pawn.Trace(AimingAt, AimNormal, TraceEnd, TraceStart, true, vect(0,0,0),, TRACEFLAG_Bullet); 
-		
-	// where the reticle will land
-	ScreenPos = Canvas.Project(AimingAt); 
-	CrosshairSize = 32 * (Canvas.ClipY / (Canvas.SizeY * 0.75f)) * (Canvas.ClipX / (Canvas.SizeX * 0.75f));
-	
+
 	// cast 
 	if (A1Weapon(weapon) != None){	
-	
+		
 		/** set player Damage */
-		PlayerDamage = A1Weapon(weapon).DamageMultiplier;
+		PlayerDamage = A1Weapon(weapon).getDamage();
 		
-		if(Pawn(HitActor) == None)
-		{
-			AimingAt = TraceEnd;
-			// FOR LASER
-			// Green, not hitting anyone
-			c.A=255;
-			c.R=0;
-			c.G=255; 
-			c.B=0;
-			Draw3DLine(TraceStart, TraceEnd, c);
-			// reticle color
-			Canvas.SetDrawColor(0,255,0,255);
-		}
-		else{
-			//FOR LASER
-			// Red, Enemy spotted
-			c.A=255;
-			c.R=255;
-			c.G=0; 
-			c.B=0;
-			Draw3DLine(TraceStart, TraceEnd, c);
-			// reticle color
-			Canvas.SetDrawColor(255,0,0,255);
-		}		
-		// DRAW CROSSHAIR
-		Canvas.SetPos(ScreenPos.X - (CrosshairSize * 0.5f) + 8, ScreenPos.Y -(CrosshairSize * 0.5f));
-		Canvas.DrawTile(class'UTHUD'.default.AltHudTexture, CrosshairSize, CrosshairSize, 666 , 256 , 64 ,64);
-		
-		// PROJECTILE DISPLAY
+		// PROJECTILE INFO DISPLAY
+		Canvas.SetPos(Canvas.SizeX * 0.9f, Canvas.SizeY * 0.85f);
+		// set color
+		c.A=255;
+		c.R=255;
+		c.G=255; 
+		c.B=255;
+		Canvas.SetDrawColorStruct(c);	
 		LatestProj =  A1Weapon(weapon).latestProjectile;	
 		if (LatestProj != None){
-		
-			// set location (3 lines)
-			Canvas.SetPos(Canvas.SizeX * 0.9f, Canvas.SizeY * 0.85f);
-			c.A=255;
-			c.R=255;
-			c.G=255; 
-			c.B=255;
-			Canvas.SetDrawColorStruct(c);	
-			Canvas.DrawText(LatestProj.WeaponEffectName,true);
-			Canvas.DrawText(LatestProj.WeaponEffectNote,true);
-			Canvas.DrawText(LatestProj.WeaponEffectDesc,true);
-			
-/*
-			// setting color for each font
-				if(projIndex == 0 ){
-				// default projectiles
-				c.A=255;
-				c.R=255;
-				c.G=255; 
-				c.B=255;
-				Canvas.SetDrawColorStruct(c);
-
-				Canvas.DrawText(LatestProj.WeaponEffectName,true);
-				Canvas.DrawText(LatestProj.WeaponEffectNote,true);
-				Canvas.DrawText(LatestProj.WeaponEffectDesc,true);
-			}
-			if(projIndex == 1){
-				// Frost Projectiles
-				c.A=255;
-				c.R=0;
-				c.G=128; 
-				c.B=255;
-				Canvas.SetDrawColorStruct(c);
-				//Canvas.DrawText(weapon.projectile.title);
-				//Canvas.DrawText("FREEZE");
-				Canvas.DrawText(LatestProj.WeaponEffectName,true);
-				Canvas.DrawText(LatestProj.WeaponEffectNote,true);
-				Canvas.DrawText(LatestProj.WeaponEffectDesc,true);
-
-			}
-			if(projIndex == 2){
-				// Fire Projectiles
-				c.A=255;
-				c.R=255;
-				c.G=128; 
-				c.B=0;
-				Canvas.SetDrawColorStruct(c);
-				//Canvas.DrawText(weapon.projectile.title);
-				//Canvas.DrawText("BURN");
-				Canvas.DrawText(LatestProj.WeaponEffectName,true);
-				Canvas.DrawText(LatestProj.WeaponEffectNote,true);
-				Canvas.DrawText(LatestProj.WeaponEffectDesc,true);
-			}
-			if(projIndex == 3){
-				// Lightning Projectiles
-				c.A=255;
-				c.R=255;
-				c.G=200; 
-				c.B=0;
-				Canvas.SetDrawColorStruct(c);
-				//Canvas.DrawText(weapon.projectile.title);
-				//Canvas.DrawText("SHOCK");
-				Canvas.DrawText(LatestProj.WeaponEffectName,true);
-				Canvas.DrawText(LatestProj.WeaponEffectNote,true);
-				Canvas.DrawText(LatestProj.WeaponEffectDesc,true);
-			}
-*/
+			Canvas.Font = class'Engine'.static.GetMediumFont();
+			Canvas.DrawText(LatestProj.WeaponEffectName, true);
+			Canvas.DrawText(LatestProj.WeaponEffectDesc, true);
+			Canvas.DrawText(LatestProj.WeaponEffectNote, true);
 		}
 
+		drawLaser(A1Weapon(weapon));
 	}// End if weapon != None
 
 	//////////////////////////////////
@@ -232,9 +125,6 @@ function DrawHUD(){
 	/** Movement Speed*/
 	PlayerSpeed = player.Pawn.GroundSpeed;
 
-	// 2 members
-	//ClassArray = weapon.WeaponProjectiles;
-
 	/** Fire Speed*/
 	FireSpeed = weapon.GetFireInterval(byte(0));
 
@@ -242,7 +132,7 @@ function DrawHUD(){
 	// HUD LOCATION SETUP - BOX DRAWING ONLY
 	/////////////////////////////////////////
 
-	// Top HUD: 75%
+	// Top HUD: 75% WIDTH
 	HudPosX = (Canvas.SizeX * 0.125f);
 	HudPosY = 0;
 	// HUD SIZE
@@ -258,8 +148,6 @@ function DrawHUD(){
 	barPosX = HudPosX + (HudSizeX * 0.05f);
 	barPosY = HudPosY + (HudSizeY * 0.25f);
 	
-
-
 	////////////////
 	/** Health HUD */
 	////////////////
@@ -355,7 +243,7 @@ function DrawHUD(){
 	
 		// location
 		Canvas.setPos(0, HudPosY);
-		//drAW
+		//draw
 		Canvas.DrawRect(TLHudSizeX, HudSizeY);
 		Canvas.Font = class'Engine'.static.GetMediumFont();
 		tc.A=255;
@@ -364,9 +252,9 @@ function DrawHUD(){
 		tc.B=0;
 		Canvas.SetDrawColorStruct(tc);
 		Canvas.SetPos( 32, 0 );
-		Canvas.DrawText("MVMT  : "$int(PlayerSpeed) ,true);
+		Canvas.DrawText("MSPD  : "$int(PlayerSpeed) ,true);
 		Canvas.DrawText("FSPD  : "$int(1/FireSpeed)$"/sec",true);
-		Canvas.DrawText("DMG   : " $int(PlayerDamage*100)$"%",true);
+		Canvas.DrawText("DMG   : " $int(PlayerDamage)$" dmg",true);
 	}
 
 	/** ACTIVE ITEM DISPLAY*/
@@ -447,6 +335,72 @@ function DrawHUD(){
 	DisplayTextForSeconds();
 }
 
+function drawLaser(A1Weapon we){
+	local Actor HitActor;
+	local Vector AimingAt;  // represents direction player is facing
+	local Vector AimNormal; // normal of their aim trace
+	local Vector TraceStart;// start trace point (taken from instantFireStartTrace()
+	local Vector TraceEnd;  // end trace point ( startPoint + weapon'sMaxRange*player's rotation)
+	local Vector ScreenPos; // where on the screen to draw the CrossHair Size on screen
+
+	local float CrosshairSize;
+	local Color c;
+
+	TraceStart = we.InstantFireStartTrace();
+	TraceEnd = TraceStart + (we.MaxRange() * 0.5f )* vector(PlayerOwner.Rotation);
+	HitActor = player.Pawn.Trace(AimingAt, AimNormal, TraceEnd, TraceStart, true, /*vect(0,0,0)*/,, TRACEFLAG_Bullet); 
+
+	ScreenPos = Canvas.Project(AimingAt); 
+	CrosshairSize = 32 * (Canvas.ClipY / (Canvas.SizeY * 0.75f)) * (Canvas.ClipX / ((Canvas.SizeX * 0.75f) ));
+
+	if (bLaser){
+
+		if(Pawn(HitActor) == None)
+		{
+			/** draw laser/reticle*/
+			// laser Green, not hitting anyone
+			AimingAt = TraceEnd;
+			c.A=255;
+			c.R=0;
+			c.G=255; 
+			c.B=0;
+			Canvas.SetDrawColorStruct(c);
+			Draw3DLine(TraceStart, TraceEnd, c);
+		}
+		else if (Pawn(HitActor) != None){
+			/** draw laser/reticle*/
+			// laser Red, Enemy spotted
+			c.A=255;
+			c.R=255;
+			c.G=0; 
+			c.B=0;
+			Canvas.SetDrawColorStruct(c);
+			Draw3DLine(TraceStart, TraceEnd, c);
+			Canvas.SetDrawColor(255,0,0,255);
+
+			Canvas.SetPos(ScreenPos.X - (CrosshairSize * 0.5f) + 8, ScreenPos.Y -(CrosshairSize * 0.5f));
+			Canvas.DrawTile(class'UTHUD'.default.AltHudTexture, CrosshairSize, CrosshairSize, 666 , 256 , 64 ,64);
+		}else if (HitActor == None){
+			AimingAt = TraceEnd;
+			c.A=255;
+			c.R=0;
+			c.G=255; 
+			c.B=0;
+			Canvas.SetDrawColorStruct(c);
+			Draw3DLine(TraceStart, TraceEnd, c);
+		}
+	}
+}
+
+exec function toggleLaser(){
+	if(bLaser){
+		bLaser = false;
+	}else{
+		bLaser = true;
+	}
+}
+
+
 function SetDisplayTextForSeconds ( string pText , int pSeconds )
 {
   textToDisplay = pText ;
@@ -490,4 +444,5 @@ exec function ShowStatsOff(){
 DefaultProperties{
 	FrameCount=0
 	bShowingStats=false
+	bLaser = false
 }

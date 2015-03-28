@@ -16,6 +16,7 @@ var array<A1PowerUp> PowerUps;
 var float DamageMultiplier;
 var float FireInterval;
 var int MaxHealth;
+var float defaultDamage;
 
 function PostBeginPlay ( )
 {
@@ -30,9 +31,7 @@ function PostBeginPlay ( )
 	PowerUps.AddItem(spawn(class'A1LifeSteal'));
 	PowerUps.AddItem(spawn(class'A1HealthUp'));
 	PowerUps.AddItem(spawn(class'A1Knockback'));
-	PowerUps.AddItem(spawn(class'A1Bazooka'));	
-
-	
+	PowerUps.AddItem(spawn(class'A1Bazooka'));		
 }
 
 function InitializeChambers ( )
@@ -217,4 +216,5 @@ DefaultProperties
 	MaxHealth = 150
 	FireInterval = 0.25
 	DamageMultiplier = 1
+	defaultDamage = 30
 }
