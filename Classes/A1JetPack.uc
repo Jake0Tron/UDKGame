@@ -76,19 +76,19 @@ function StopActivate()
 
 DefaultProperties
 {
-	Thrust = 1400
+	Thrust = 1450
 	JetPackOn = false
 
-	MaxFuel = 100
-	Fuel = 0
-	FuelConsumptionRate = 30
-	FuelRegenRate = 45
+	MaxFuel = 1000
+	Fuel = 1000
+	FuelConsumptionRate = 420 // ;)
+	FuelRegenRate = 300
 
 	Trail = ParticleSystem'Castle_Assets.FX.P_FX_Fire_SubUV_01'
 
 	PowerupName = "Jet Pack"
 	PowerDescription = "Hold Shift to use, Beware fall damage!"
-	Unique = true
+	Unique = false
 
 	begin object Name=PickupMeshComp
 		StaticMesh=StaticMesh'Pickups.Armor.Mesh.S_Pickups_Armor'

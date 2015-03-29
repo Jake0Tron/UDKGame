@@ -108,6 +108,28 @@ exec function prevProj(){
 		else return;
 }
 
+state PlayerWalking
+{
+//ignores SeePlayer, HearNoise, Bump;
+
+   function ProcessMove(float DeltaTime, vector NewAccel, eDoubleClickDir DoubleClickMove, rotator DeltaRot)
+   {
+      if( Pawn == None )
+      {
+         return;
+      }
+
+      if (Role == ROLE_Authority)
+      {
+         // Update ViewPitch for remote clients
+         Pawn.SetRemoteViewPitch( Rotation.Pitch );
+      }
+
+      Pawn.Acceleration = NewAccel;
+
+      CheckJumpOrDuck();
+   }
+}
 
 DefaultProperties
 {

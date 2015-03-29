@@ -60,7 +60,7 @@ DefaultProperties
 
 	PowerupName = "Bazooka"
 	PowerDescription = "Unguided rocket, watch the backblast!"
-	Unique = true
+	Unique = false
 
 	begin object Name=PickupMeshComp
 		StaticMesh=StaticMesh'GP_Onslaught.Mesh.S_GP_Ons_Weapon_Locker'

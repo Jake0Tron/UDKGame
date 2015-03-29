@@ -1,13 +1,11 @@
 class A1EnemyBot extends UTBot;
-/** Adjusts AI Stats
- */
 
 simulated event PostBeginPlay(){
 	super.PostBeginPlay();
-	getSkill();
-	decideUpgrade();
+	//decideUpgrade();
 }
 
+/** Adjusts AI Stats*/
 function decideUpgrade(){	
 	accuracyIncrease(Randomize(10));
 	aggressiveIncrease(Randomize(10));
@@ -62,10 +60,6 @@ function cbtIncrease(float times){
 	}
 }
 
-//Get Skill
-function getSkill(){
-//	Skill = WorldInfo.Game.GameDifficulty+A1Game(WorldInfo.Game).activeChamberIndex;
-}
 
 //Increase Jump
 function jmpIncrease(float times){
@@ -89,11 +83,13 @@ Begin:
   destroy() ;
 }
 
+
+
 DefaultProperties{
-	Accuracy = 0;			// -1 to 1 (0 is default, higher is more accurate)
-	BaseAggressiveness = 0; // 0 to 1 (0.3 default, higher is more aggressive)
-	StrafingAbility = 0;	// -1 to 1 (higher uses strafing more)
-	CombatStyle = 0;		// -1 to 1 = low means tends to stay off and snipe, high means tends to charge and melee
-	Jumpiness = 0;			// 0 to 1
+	Accuracy = 1			// -1 to 1 (0 is default, higher is more accurate)
+	BaseAggressiveness = 0.75  // 0 to 1 (0.3 default, higher is more aggressive)
+	StrafingAbility = 0.5	// -1 to 1 (higher uses strafing more)
+	CombatStyle = 0.5		// -1 to 1 = low means tends to stay off and snipe, high means tends to charge and melee
+	Jumpiness = 0.25		// 0 to 1
 }
 

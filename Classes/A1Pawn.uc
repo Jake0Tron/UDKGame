@@ -52,18 +52,18 @@ simulated function bool CalcCamera( float fDeltaTime, out vector out_CamLoc, out
 	// uses GetCollisionHeight (assuming there is no interference)
 	// if dead, set to 0
 	DesiredCameraZOffset = (Health > 0) 
-		? 1.3 * GetCollisionHeight() + Mesh.Translation.Z 
+		? 1.0 * GetCollisionHeight() + Mesh.Translation.Z 
 		: 0.f;
 	
 	
-	CameraZOffset = (fDeltaTime < 0.2) 
+	CameraZOffset = (fDeltaTime < 0.1) 
 		?DesiredCameraZOffset * 5 * fDeltaTime + (1 - 5*fDeltaTime) * CameraZOffset 
 		:DesiredCameraZOffset;
    
 	// player dead viewpoint
-	if ( Health <= 0 )
+	if ( Health <= 0 || bFeigningDeath)
 	{
-		CurrentCamOffset = vect(256,512,0);
+		CurrentCamOffset = vect(0,0,0);
 		CurrentCamOffset.X = GetCollisionRadius();
 	}
 
@@ -93,7 +93,7 @@ simulated function bool CalcCamera( float fDeltaTime, out vector out_CamLoc, out
 	}
 
 	// gets pawn's collision height, if the Camera's Z is greater than the Collision height, rotate the camera downwards (top-down esque)
-	if (CamDirX.Z > GetCollisionHeight())
+	if (CamDirX.Z >= GetCollisionHeight())
 	{
 		CamDirX *= square(cos(out_CamRot.Pitch * 0.0000958738)); // 0.0000958738 = 2*PI/65536
 	}
@@ -102,7 +102,7 @@ simulated function bool CalcCamera( float fDeltaTime, out vector out_CamLoc, out
 
 	out_CamLoc = CamStart - (CurrentCamOffset.X + CamX ) * CamDirX - (CurrentCamOffset.Y + CamY) * CamDirY + (CurrentCamOffset.Z + CamZ) * CamDirZ;
 	
-	if (Trace(HitLocation, HitNormal, out_CamLoc, CamStart, false, vect(12,12,12)) != None)
+	if (Trace(HitLocation, HitNormal, out_CamLoc, CamStart, false, vect(18, 18, 18)) != None)
 	{
 		out_CamLoc = HitLocation;
 	}
@@ -110,34 +110,52 @@ simulated function bool CalcCamera( float fDeltaTime, out vector out_CamLoc, out
 	return true;
 }   
 
+//override to make player mesh visible by default
+simulated event BecomeViewTarget( PlayerController PC )
+{
+   local UTPlayerController UTPC;
+
+   Super.BecomeViewTarget(PC);
+
+   if (LocalPlayer(PC.Player) != None)
+   {
+      UTPC = UTPlayerController(PC);
+      if (UTPC != None)
+      {
+         //set player controller to behind view and make mesh visible
+         UTPC.SetBehindView(true);
+         SetMeshVisibility(UTPC.bBehindView);
+      }
+   }
+}
 
 exec function SniperCam(){
 	bSniperCam=true;	
 	bStandardCam=false;
-	CamX=32;
+	CamX=ShoulderOffset;
 	CamY=0;
-	CamZ=-8;
+	CamZ=8;
 }
 
 exec function StandardCam(){
 	bStandardCam = true;
 	bSniperCam=false;
-	CamX=128;
+	CamX=CameraDistance;
 	CamY=0;
-	CamZ=0;
+	CamZ=16;
 }
 
 exec function toggleLeftShoulderCam(){
 	if (bStandardCam)
 	{
-		CamX=128;
+		CamX=CameraDistance;
 		CamY=ShoulderOffset;
-		CamZ=0;
+		CamZ=16;
 		bStandardCam=false;
 	}else{
-		CamX=128;
+		CamX=CameraDistance;
 		CamY=0;
-		CamZ=0;
+		CamZ=16;
 		bStandardCam=true;
 	}
 
@@ -147,25 +165,25 @@ exec function toggleRightShoulderCam(){
 	
 	if (bStandardCam)
 	{
-		CamX=128;
+		CamX=CameraDistance;
 		CamY=-ShoulderOffset;
-		CamZ=0;
+		CamZ=16;
 		bStandardCam=false;
 	}else{
-		CamX=128;
+		CamX=CameraDistance;
 		CamY=0;
-		CamZ=0;
+		CamZ=16;
 		bStandardCam=true;
 	}
 }
 
 defaultproperties
 {
-	ShoulderOffset=48
-	CameraDistance = 256
-	bStandardCam=true
-	CamX=128
+	ShoulderOffset = 32
+	CameraDistance = 200
+	bStandardCam = true
+	CamX=200
 	CamY=0
-	CamZ=0
+	CamZ=8
 	ClearedChamber = false
 }
