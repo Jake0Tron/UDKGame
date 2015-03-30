@@ -87,7 +87,8 @@ DefaultProperties
 	Trail = ParticleSystem'Castle_Assets.FX.P_FX_Fire_SubUV_01'
 
 	PowerupName = "Jet Pack"
-	PowerDescription = "Hold Shift to use, Beware fall damage!"
+	PowerDescription = "Hold Shift to use"
+	PowerUpNote= "Beware fall damage!"
 	Unique = false
 
 	begin object Name=PickupMeshComp

@@ -2,6 +2,7 @@ class A1PowerUp extends actor;
 
 var string PowerUpName;
 var string PowerDescription;
+var string PowerNote;
 
 var bool Unique;
 var bool PickedUp;

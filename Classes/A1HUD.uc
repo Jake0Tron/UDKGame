@@ -77,6 +77,8 @@ function DrawHUD(){
 
 	local A1Projectile LatestProj;
 
+	local string statString;
+
 	// cast to A1Player
 	player = A1Player(PlayerOwner);
 
@@ -215,7 +217,7 @@ function DrawHUD(){
 	c.B=0;
 	Canvas.SetDrawColorStruct(c);
 	Canvas.SetPos( barPosX, barPosY );
-	Canvas.DrawBox( barSizeX, barSizeY );
+	Canvas.DrawBox( barSizeX + 2, barSizeY );
 	
 	// Heath Text Display
 	Canvas.Font = class'Engine'.static.GetLargeFont();
@@ -227,9 +229,19 @@ function DrawHUD(){
 	Canvas.SetPos( (barPosX + HealthAmount) + 16, (Canvas.SizeY * 0.035f) );
 	Canvas.DrawText(HealthCount$"/"$int(MaxHealth) ,false);
 
+	/** SCORE DISPLAY */
+	c.A=255;
+	c.R=128;
+	c.G=255;
+	c.B=0;
+	Canvas.SetDrawColorStruct(c);
+	Canvas.SetPos( Canvas.SizeX * 0.5f,Canvas.SizeY * 0.85f );
+	Canvas.DrawText("SCORE : " $int(GameInfo.Teams[0].Score)$"" ,true);
+
+
 	/** STAT Text Display*/
 	
-	/** Togglable stat display*/
+	/** Toggleable stat display*/
 	if (bShowingStats){
 		///////////////////////
 		/** Stat HUD TOP LEFT*/
@@ -261,13 +273,14 @@ function DrawHUD(){
 	pawn = A1Pawn(player.Pawn);
 
 	if (GameInfo.CurrentItem != None){
-		Canvas.Font = class'Engine'.static.GetLargeFont();
+		Canvas.Font = class'Engine'.static.GetMediumFont();
 		tc.A=255;
 		tc.R=255;
 		tc.G=255;
 		tc.B=255;
 		Canvas.SetDrawColorStruct(tc);
-		Canvas.Font.GetStringHeightAndWidth(GameInfo.CurrentItem.PowerUpName,textSizeY,textSizeX);
+		statString = GameInfo.CurrentItem.PowerUpName$" "$GameInfo.CurrentItem.PowerDescription;
+		Canvas.Font.GetStringHeightAndWidth(statString,textSizeY,textSizeX);
 		Canvas.SetPos(
 			(HudSizeX + TLHudSizeX + (textSizeX * 0.25f)),
 			((textSizeY * 0.5f)) 

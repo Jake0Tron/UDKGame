@@ -37,7 +37,7 @@ DefaultProperties
 {
 	index = 2
 	Damage = 25
-	Speed=1500
+	Speed=3000
 	MaxSpeed=4000
 	AccelRate=1500.0
 	ColorLevel = (X=5.0,Y=0.1,Z=0.1)

@@ -51,6 +51,6 @@ DefaultProperties
 	AccelRate=5000.0
 
 	WeaponEffectName = "Lightning Effect"
-	WeaponEffectDesc = "Penetrates Target at Reduced Damage"
+	WeaponEffectDesc = "Reduced Damage"
 	WeaponEffectNote = "Faster Flying Bullet!"
 }

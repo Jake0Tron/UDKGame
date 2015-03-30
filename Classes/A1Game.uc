@@ -17,6 +17,7 @@ var float DamageMultiplier;
 var float FireInterval;
 var int MaxHealth;
 var float defaultDamage;
+var int enemiesKilled;
 
 function PostBeginPlay ( )
 {
@@ -208,13 +209,13 @@ DefaultProperties
 	// Weapon
 	DefaultInventory(0)=class'A1Weapon'
 	activeChamberIndex=-1
-	 BotClass=class'A1EnemyBot'
-	 chambersInitialized=false
-	 bPlayersVsBots=true
+	BotClass=class'A1EnemyBot'
+	chambersInitialized=false
+	bPlayersVsBots=true
 
 	// powerups
 	MaxHealth = 150
-	FireInterval = 0.25
+	FireInterval = 0.3
 	DamageMultiplier = 1
 	defaultDamage = 30
 }

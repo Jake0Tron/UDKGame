@@ -33,11 +33,11 @@ simulated function Touch(Actor Other, PrimitiveComponent OtherComp, Object.Vecto
 DefaultProperties
 {
 	index = 0
-	Speed=1400
+	Speed=3200
 	MaxSpeed=4000
 	AccelRate=2000.0
 	
-	WeaponEffectName = "Standard Bullets"
-	WeaponEffectDesc = "High Damage"
+	WeaponEffectName = ""
+	WeaponEffectDesc = ""
 	WeaponEffectNote = ""
 }

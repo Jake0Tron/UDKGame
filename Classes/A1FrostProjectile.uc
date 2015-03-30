@@ -43,6 +43,7 @@ DefaultProperties
 	index = 1
 	Damage = 20
 	ColorLevel = (X=0.3,Y=0.3,Z=5)
+	Speed = 4000
 	WeaponEffectName = "Frost Bullet"
 	WeaponEffectDesc = "Reduces enemy Move Speed and Fire Rate; Stacks 5 times."
 	WeaponEffectNote = "Knockback does not work with this projectile"
