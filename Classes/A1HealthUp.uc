@@ -1,4 +1,6 @@
-class A1HealthUp extends A1PowerUp;
+class A1HealthUp extends A1PowerUp
+	placeable
+	ClassGroup(A1);
 
 const HealthIncrease = 15;
 

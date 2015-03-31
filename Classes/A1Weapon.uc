@@ -56,8 +56,8 @@ DefaultProperties
 	WeaponProjectiles[3] = class'A1LightningProjectile'
 	
 	WeaponFireTypes(0)=EWFT_Projectile
-	FireInterval(0)=0.25
-	FireInterval(1)=0.25
+	FireInterval(0)=0.15
+	FireInterval(1)=0.15
 	ShotCost(0)=0
 	ShotCost(1)=0
 	DamageMultiplier = 1

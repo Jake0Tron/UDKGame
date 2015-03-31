@@ -76,7 +76,7 @@ function StopActivate()
 
 DefaultProperties
 {
-	Thrust = 1450
+	Thrust = 1500
 	JetPackOn = false
 
 	MaxFuel = 1000
@@ -88,7 +88,6 @@ DefaultProperties
 
 	PowerupName = "Jet Pack"
 	PowerDescription = "Hold Shift to use"
-	PowerUpNote= "Beware fall damage!"
 	Unique = false
 
 	begin object Name=PickupMeshComp
@@ -99,3 +98,4 @@ DefaultProperties
 	PickupMesh = PickupMeshComp
 	Components.Add(PickupMeshComp)
 }
+

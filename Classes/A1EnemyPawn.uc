@@ -51,14 +51,19 @@ simulated event PostBeginPlay(){
 **/
 //this function randomizes the upgrades
 function decideUpgrade(){
-	if(A1Weapon(self.Weapon) != None){
-		A1Weapon(self.Weapon).FireInterval[0] = 0.25;
+	if(A1EnemyWeapon(self.Weapon) != None){
+		//A1Weapon(self.Weapon).FireInterval[0] = 0.25;
 		//rateUpgrade(A1Game(WorldInfo.Game).activeChamberIndex);
 		//dmgUpgrade(A1Game(WorldInfo.Game).activeChamberIndex);
-		RWE(4);
+		//RWE(4);
 	}
 	//hltUpgrade(A1Game(WorldInfo.Game).activeChamberIndex);
 	//moveUpgrade(A1Game(WorldInfo.Game).activeChamberIndex);
+}
+
+function Vector GetLocation3D()
+{
+	return Location;
 }
 
 /** Upgrade Functions **/
@@ -71,17 +76,17 @@ function rateUpgrade(int amt){
 	percentage = 1 - percentage;
 
 	for(count = 0;count < amt;count++){
-		A1Weapon(self.Weapon).FireInterval[0] = FMax(0.1, A1Weapon(self.Weapon).FireInterval[0] * percentage);
+		A1EnemyWeapon(self.Weapon).FireInterval[0] = FMax(0.1, A1EnemyWeapon(self.Weapon).FireInterval[0] * percentage);
 	}	
 
-	if(A1Weapon(self.Weapon).FireInterval[0] < 0.10){
-		A1Weapon(self.Weapon).FireInterval[0] = 0.10;		
+	if(A1EnemyWeapon(self.Weapon).FireInterval[0] < 0.10){
+		A1EnemyWeapon(self.Weapon).FireInterval[0] = 0.10;		
 	}
 
-	A1Weapon(self.Weapon).FireInterval[1] = A1Weapon(self.Weapon).FireInterval[0];
+	A1EnemyWeapon(self.Weapon).FireInterval[1] = A1EnemyWeapon(self.Weapon).FireInterval[0];
 
 	//Save Upgrade
-	_defaultFireRate = A1Weapon(self.Weapon).FireInterval[0];
+	_defaultFireRate = A1EnemyWeapon(self.Weapon).FireInterval[0];
 }
 
 //Upgrade Weapon Damage increase by 5% per chamber
@@ -144,10 +149,12 @@ function rateDowngrade(int amt){
 	for(count = 0; count < amt; count++){
 			_temp *= (1 + percentage);
 	}
-
-	A1Weapon(self.Weapon).FireInterval[0] = _defaultFireRate * (1 + _temp);
-	A1Weapon(self.Weapon).FireInterval[1] = A1Weapon(self.Weapon).FireInterval[0];
-	this.FireRateChanged(); //Update FireRate Changes (Prevents Fire Hold Abuse)
+	
+	if (Weapon != None){
+		A1EnemyWeapon(self.Weapon).FireInterval[0] = _defaultFireRate * (1 + _temp);
+		A1EnemyWeapon(self.Weapon).FireInterval[1] = A1EnemyWeapon(self.Weapon).FireInterval[0];
+		this.FireRateChanged(); //Update FireRate Changes (Prevents Fire Hold Abuse)
+	}
 }
 //////////////////////////////////////////////////////////////////////////////////////////////
 //FIRE FUNCTIONS//////////////////////////////////////////////////////////////////////////////
@@ -238,8 +245,8 @@ event Tick( float DeltaTime ){
 				//Reset Defaults
 				this.FrostStacks = 0;
 				this.GroundSpeed = this._defaultGroundSpeed;
-				A1Weapon(this.Weapon).FireInterval[0] = this._defaultFireRate;
-				A1Weapon(this.Weapon).FireInterval[1] = this._defaultFireRate;
+				A1EnemyWeapon(this.Weapon).FireInterval[0] = this._defaultFireRate;
+				A1EnemyWeapon(this.Weapon).FireInterval[1] = this._defaultFireRate;
 				this.FireRateChanged();
 			}
 		}
@@ -311,7 +318,7 @@ event Tick( float DeltaTime ){
 Defaultproperties
 {
 	ControllerClass=class'A1EnemyBot'
-	_defaultFireRate = 0.25
+	_defaultFireRate = 0.45
 
 	//====Frost Defaults=====//
 	FrostEffect = false

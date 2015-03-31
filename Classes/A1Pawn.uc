@@ -177,6 +177,8 @@ exec function toggleRightShoulderCam(){
 	}
 }
 
+
+
 defaultproperties
 {
 	ShoulderOffset = 32

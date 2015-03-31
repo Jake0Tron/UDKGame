@@ -1,8 +1,10 @@
 class A1EnemyBot extends UTBot;
 
+var A1ItemSpawner spawner;
+
 simulated event PostBeginPlay(){
 	super.PostBeginPlay();
-	//decideUpgrade();
+	decideUpgrade();
 }
 
 /** Adjusts AI Stats*/
@@ -80,16 +82,17 @@ function float Randomize(int num){
 state Dead
 {
 Begin:
-  destroy() ;
+	destroy();
 }
 
 
 
 DefaultProperties{
-	Accuracy = 1			// -1 to 1 (0 is default, higher is more accurate)
-	BaseAggressiveness = 0.75  // 0 to 1 (0.3 default, higher is more aggressive)
-	StrafingAbility = 0.5	// -1 to 1 (higher uses strafing more)
-	CombatStyle = 0.5		// -1 to 1 = low means tends to stay off and snipe, high means tends to charge and melee
-	Jumpiness = 0.25		// 0 to 1
+	Accuracy = 1			    // -1 to 1 (0 is default, higher is more accurate)
+	BaseAggressiveness = 0.75   // 0 to 1 (0.3 default, higher is more aggressive)
+	StrafingAbility = 0 	    // -1 to 1 (higher uses strafing more)
+	CombatStyle = 0.5		    // -1 to 1 = low means tends to stay off and snipe, high means tends to charge and melee
+	Jumpiness = 0.5             // 0 to 1
+	Alertness = 0.5             // -1 to 1
 }
 

@@ -4,6 +4,6 @@ var float FoV, Height;
 
 DefaultProperties
 {
-	FoV=90
+	FoV=70
 	Height=0
 }

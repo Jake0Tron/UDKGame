@@ -72,6 +72,9 @@ exec function SelectProjectile(int x)
 		A1Weapon(self.Pawn.Weapon).setMode( x );
 }
 
+function TakeDamgage(){
+
+}
 
 // advance to next projectile type, or roll back
 exec function nextProj(){
@@ -90,6 +93,7 @@ exec function nextProj(){
 	}
 	else return;
 }
+
 // advance to prev projectile type, or roll back
 exec function prevProj(){
 	local int cType;
@@ -106,29 +110,6 @@ exec function prevProj(){
 		SelectProjectile(cType);
 	}
 		else return;
-}
-
-state PlayerWalking
-{
-//ignores SeePlayer, HearNoise, Bump;
-
-   function ProcessMove(float DeltaTime, vector NewAccel, eDoubleClickDir DoubleClickMove, rotator DeltaRot)
-   {
-      if( Pawn == None )
-      {
-         return;
-      }
-
-      if (Role == ROLE_Authority)
-      {
-         // Update ViewPitch for remote clients
-         Pawn.SetRemoteViewPitch( Rotation.Pitch );
-      }
-
-      Pawn.Acceleration = NewAccel;
-
-      CheckJumpOrDuck();
-   }
 }
 
 DefaultProperties

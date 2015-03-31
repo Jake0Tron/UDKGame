@@ -41,10 +41,16 @@ simulated function Touch(Actor Other, PrimitiveComponent OtherComp, Object.Vecto
 DefaultProperties
 {
 	index = 1
-	Damage = 20
-	ColorLevel = (X=0.3,Y=0.3,Z=5)
-	Speed = 4000
+	ColorLevel = (X=0,Y=0.3,Z=5.0)
+	ExplosionColor=(X=0,Y=0.3,Z=5.0)
+
+
+	Damage = 15
+	Speed = 3800
+	MaxSpeed=6000
+	AccelRate=4000.0
+	
 	WeaponEffectName = "Frost Bullet"
-	WeaponEffectDesc = "Reduces enemy Move Speed and Fire Rate; Stacks 5 times."
+	WeaponEffectDesc = "Reduces enemy Move/Fire Speed; Stacks 5 times."
 	WeaponEffectNote = "Knockback does not work with this projectile"
 }

@@ -43,8 +43,9 @@ simulated function Touch(Actor Other, PrimitiveComponent OtherComp, Object.Vecto
 DefaultProperties
 {
 	index = 3
-	Damage = 25
+	Damage = 10
 	ColorLevel = (X=5.3,Y=5.3,Z=0.0)
+	ExplosionColor=(X=5.3,Y=5.3,Z=0.0)
 
 	Speed=4400
 	MaxSpeed=8000

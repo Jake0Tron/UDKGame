@@ -21,6 +21,9 @@ var float PlayerDamage;
 var float FireSpeed;
 var bool bLaser;
 
+var A1EnemyPawn enemy;
+var Vector eScreenCoord;
+
 simulated function PostBeginPlay()
 {
 	super.PostBeginPlay();
@@ -344,8 +347,50 @@ function DrawHUD(){
 			}		
 		}
 	}
-	
+	DrawEnemyHealthBars();
 	DisplayTextForSeconds();
+}
+
+function DrawEnemyHealthBars(){
+/* ENEMY HEALTH BARS */
+	
+	local float barX, barY, remX, remP, barHeight, barClose, barFar, barRads;
+
+	barX=Canvas.SizeX * 0.025f;
+	barY=Canvas.SizeY * 0.0075f;
+
+	foreach AllActors(class'A1EnemyPawn' , enemy ){
+		if (enemy == None) return;
+
+		eScreenCoord = Canvas.Project(enemy.Location);
+		
+		barClose = (((eScreenCoord.Y/Canvas.SizeY) * eScreenCoord.Y) / 2.0f);
+		
+		barRads = (1-eScreenCoord.Z)* 1600 * 0.0174532925;
+
+		barFar = (eScreenCoord.Y/Canvas.SizeY) + (sin(barRads) * (enemy.BaseEyeHeight + 75))*2.0f;
+
+		barHeight = fMin(barFar, 200);
+
+		// remaining health percent
+		remP = (enemy.Health * 1.0f / enemy.HealthMax * 1.0f)  ;
+		//remaining health pixels
+		remX = clamp((remP * barX) , 0 , enemy.HealthMax);
+	
+		if(eScreenCoord.Z > 0 && eScreenCoord.X >= 0 && eScreenCoord.Y >= 0 && eScreenCoord.Y <= Canvas.SizeX && eScreenCoord.Y <= Canvas.SizeY &&  PlayerOwner.Pawn != enemy && enemy.Health > 0)
+		{
+			// Background
+			Canvas.SetDrawColor(255,255,255);
+			Canvas.SetPos((eScreenCoord.X - BarX * 0.5f), (eScreenCoord.Y - barHeight));
+			Canvas.DrawRect(barX, barY);
+			//Health Remaining
+			Canvas.SetDrawColor(255,0,0);
+			Canvas.SetPos((eScreenCoord.X - BarX * 0.5f), (eScreenCoord.Y - barHeight));
+			Canvas.DrawRect(remX , barY);
+
+			//
+		}
+	}
 }
 
 function drawLaser(A1Weapon we){
@@ -457,5 +502,5 @@ exec function ShowStatsOff(){
 DefaultProperties{
 	FrameCount=0
 	bShowingStats=false
-	bLaser = false
+	bLaser = true
 }

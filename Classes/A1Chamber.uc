@@ -14,7 +14,7 @@ var int currentSpawnIndex ;
 
 var( Chamber ) UTTeleporter Teleporter ;
 
-var(Chamber) A1ItemSpawner ItemSpawner;
+var(Chamber) array<A1ItemSpawner> ItemSpawners;
 
 var bool TeleporterHidden ;
 var bool wasActivated ;

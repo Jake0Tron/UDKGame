@@ -36,11 +36,15 @@ simulated function Touch(Actor Other, PrimitiveComponent OtherComp, Object.Vecto
 DefaultProperties
 {
 	index = 2
-	Damage = 25
-	Speed=3000
+	ColorLevel = (X=5.0,Y=0,Z=0)
+	ExplosionColor=(X=5.0,Y=5.0,Z=0.0)
+
+
+	Damage = 12
+	Speed=3500
 	MaxSpeed=4000
-	AccelRate=1500.0
-	ColorLevel = (X=5.0,Y=0.1,Z=0.1)
+	AccelRate=2500.0
+
 	WeaponEffectName = "Fire Bullet"
 	WeaponEffectDesc = "Burn Damage Over Time"
 	WeaponEffectNote = ""

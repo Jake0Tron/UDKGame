@@ -18,6 +18,7 @@ var float FireInterval;
 var int MaxHealth;
 var float defaultDamage;
 var int enemiesKilled;
+var int prevScore;
 
 function PostBeginPlay ( )
 {
@@ -26,13 +27,13 @@ function PostBeginPlay ( )
   self.InitializeChambers() ;  
 
   // instantiate all powerups
-	PowerUps.AddItem(spawn(class'A1DamageUp'));
-	PowerUps.AddItem(spawn(class'A1FireRateUp'));
+	//PowerUps.AddItem(spawn(class'A1DamageUp'));
+	//PowerUps.AddItem(spawn(class'A1FireRateUp'));
 	PowerUps.AddItem(spawn(class'A1JetPack'));
-	PowerUps.AddItem(spawn(class'A1LifeSteal'));
-	PowerUps.AddItem(spawn(class'A1HealthUp'));
-	PowerUps.AddItem(spawn(class'A1Knockback'));
-	PowerUps.AddItem(spawn(class'A1Bazooka'));		
+	//PowerUps.AddItem(spawn(class'A1LifeSteal'));
+	//PowerUps.AddItem(spawn(class'A1HealthUp'));
+	//PowerUps.AddItem(spawn(class'A1Knockback'));
+	//PowerUps.AddItem(spawn(class'A1Bazooka'));		
 }
 
 function InitializeChambers ( )
@@ -62,11 +63,14 @@ function resetChambers ( )
 
 function ActivateChamber ( A1Chamber pChamber )
 {
+	local A1ItemSpawner sp; 
+
 	if (self.ThereIsHuman()){
-	  pChamber.game = self ;
-	  pChamber.FillWithEnemies() ;
-	  pChamber.ItemSpawner.Reset();
-	  
+	  pChamber.game = self;
+	  pChamber.FillWithEnemies();
+	  foreach AllActors(class 'A1ItemSpawner' , sp){
+		sp.Reset();
+	  }
 	}
 }
 
@@ -87,26 +91,31 @@ function Tick ( float pDeltaTime )
 {
   super.Tick( pDeltaTime ) ;
   self.InitializeChambers() ;
- if (!ThereIsHuman())
+  
+  if (!ThereIsHuman())
 	return;
-  self.healthRestore() ;
+
+  if(prevScore < Teams[0].Score ){
+	prevScore = Teams[0].Score;
+   	self.restoreHealth = true;
+  }
+  healthRestore();
 }
 
 function healthRestore ( )
 {
   local A1Player lPlayer ;
-
+	local int givenHealthAmount;
+	givenHealthAmount=25;
   if ( self.restoreHealth )
   {
     foreach AllActors( class'A1Player' , lPlayer ) break ;
-
-    while ( lPlayer.Pawn.Health < lPlayer.Pawn.HealthMax )
-    {
-      lPlayer.Pawn.Health ++ ;
-      return ;
-    }
-
-    self.restoreHealth = false ;
+	if (lPlayer.Pawn.Health <lPlayer.Pawn.HealthMax-givenHealthAmount ){
+      lPlayer.Pawn.Health +=givenHealthAmount;
+	}else{
+		lPlayer.Pawn.Health	= lPlayer.Pawn.HealthMax;
+	}
+	  self.restoreHealth = false ;
   }
 }
 
@@ -212,10 +221,11 @@ DefaultProperties
 	BotClass=class'A1EnemyBot'
 	chambersInitialized=false
 	bPlayersVsBots=true
+	prevScore = 0
 
 	// powerups
 	MaxHealth = 150
-	FireInterval = 0.3
+	FireInterval = 0.25
 	DamageMultiplier = 1
-	defaultDamage = 30
+	defaultDamage = 15
 }
