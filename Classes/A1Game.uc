@@ -19,6 +19,7 @@ var int MaxHealth;
 var float defaultDamage;
 var int enemiesKilled;
 var int prevScore;
+var int NumPlayerDeaths;
 
 function PostBeginPlay ( )
 {
@@ -98,7 +99,7 @@ function Tick ( float pDeltaTime )
   if(prevScore < Teams[0].Score ){
 	prevScore = Teams[0].Score;
    	self.restoreHealth = true;
-  }
+  } 
   healthRestore();
 }
 

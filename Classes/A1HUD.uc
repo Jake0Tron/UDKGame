@@ -28,6 +28,7 @@ simulated function PostBeginPlay()
 {
 	super.PostBeginPlay();
 	Gameinfo = A1Game(WorldInfo.Game);
+	SetDisplayTextForSeconds("Welcome to Dead End!\n\nTry to find your way through the maze to win...\n\nBeware of Traps and Enemies!" , 10);
 }
 
 function DrawHUD(){
@@ -205,6 +206,14 @@ function DrawHUD(){
 		tc.G=0;
 		tc.B=0;
 	}
+	if (HealthCount == 0){
+		SetDisplayTextForSeconds("You died!\n\nPress any button to respawn" , 15);
+		GameInfo.NumPlayerDeaths++;
+	}
+	if (GameInfo.Teams[0].Score + GameInfo.NumPlayerDeaths == 26){
+		SetDisplayTextForSeconds("Congratulations!\n\nYou've cleared the maze of all enemies!\n\nYou Win!" , 25);
+		
+	}
 
 	Canvas.SetDrawColorStruct(c);
 	// draw % of box with health remaining
@@ -354,7 +363,7 @@ function DrawHUD(){
 function DrawEnemyHealthBars(){
 /* ENEMY HEALTH BARS */
 	
-	local float barX, barY, remX, remP, barHeight, barClose, barFar, barRads;
+	local float barX, barY, remX, remP, barHeight, barFar, barRads;
 
 	barX=Canvas.SizeX * 0.025f;
 	barY=Canvas.SizeY * 0.0075f;
@@ -363,9 +372,7 @@ function DrawEnemyHealthBars(){
 		if (enemy == None) return;
 
 		eScreenCoord = Canvas.Project(enemy.Location);
-		
-		barClose = (((eScreenCoord.Y/Canvas.SizeY) * eScreenCoord.Y) / 2.0f);
-		
+				
 		barRads = (1-eScreenCoord.Z)* 1600 * 0.0174532925;
 
 		barFar = (eScreenCoord.Y/Canvas.SizeY) + (sin(barRads) * (enemy.BaseEyeHeight + 75))*2.0f;
@@ -482,7 +489,7 @@ function DisplayTextForSeconds ( )
 		Canvas.Font = class'Engine'.static.GetLargeFont();
 		Canvas.Font.GetStringHeightAndWidth(textToDisplay,textSizeY,textSizeX);
 		Canvas.SetPos( 
-				((Canvas.SizeX * 0.5f)  - (textSizeX * 0.5f )) , (Canvas.SizeY * 0.5f) 
+				((Canvas.SizeX - textSizeX) * 0.5f ) , (Canvas.SizeY * 0.5f) 
 				);
 		Canvas.DrawText( textToDisplay , true);
 		secondsFrameCounter -- ;

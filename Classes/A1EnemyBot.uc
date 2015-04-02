@@ -4,7 +4,7 @@ var A1ItemSpawner spawner;
 
 simulated event PostBeginPlay(){
 	super.PostBeginPlay();
-	decideUpgrade();
+	//decideUpgrade();
 }
 
 /** Adjusts AI Stats*/
@@ -62,7 +62,6 @@ function cbtIncrease(float times){
 	}
 }
 
-
 //Increase Jump
 function jmpIncrease(float times){
 	Jumpiness = (times * 0.5);
@@ -79,6 +78,18 @@ function float Randomize(int num){
 	return ((Rand(num) - Rand(num)) + 1);
 }
 
+function Reset()
+{
+	Super.Reset();
+	bHuntPlayer = true;
+	if (bEnemyIsVisible)
+		GotoState('Hunting');
+	else
+		GotoState('Roaming');
+	if ( Pawn == None )
+		GotoState('Dead');
+}
+
 state Dead
 {
 Begin:
@@ -90,9 +101,11 @@ Begin:
 DefaultProperties{
 	Accuracy = 1			    // -1 to 1 (0 is default, higher is more accurate)
 	BaseAggressiveness = 0.75   // 0 to 1 (0.3 default, higher is more aggressive)
-	StrafingAbility = 0 	    // -1 to 1 (higher uses strafing more)
+	StrafingAbility = 0.25 	    // -1 to 1 (higher uses strafing more)
 	CombatStyle = 0.5		    // -1 to 1 = low means tends to stay off and snipe, high means tends to charge and melee
 	Jumpiness = 0.5             // 0 to 1
 	Alertness = 0.5             // -1 to 1
+	HearingThreshold=3200.0
+
 }
 
